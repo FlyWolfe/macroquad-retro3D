@@ -43,9 +43,10 @@ pub struct Vertex {
     pos: [f32; 3],
     uv: [f32; 2],
     color: [u8; 4],
+    normal: [f32; 3],
 }
 
-pub type VertexInterop = ([f32; 3], [f32; 2], [f32; 4]);
+pub type VertexInterop = ([f32; 3], [f32; 2], [f32; 4], [f32; 3]);
 
 impl Into<VertexInterop> for Vertex {
     fn into(self) -> VertexInterop {
@@ -58,6 +59,7 @@ impl Into<VertexInterop> for Vertex {
                 self.color[2] as f32 / 255.0,
                 self.color[3] as f32 / 255.0,
             ],
+            self.normal,
         )
     }
 }
@@ -72,12 +74,13 @@ impl Into<Vertex> for VertexInterop {
                 ((self.2)[2] * 255.) as u8,
                 ((self.2)[3] * 255.) as u8,
             ],
+            normal: self.3,
         }
     }
 }
 
 impl Vertex {
-    pub fn new(x: f32, y: f32, z: f32, u: f32, v: f32, color: Color) -> Vertex {
+    pub fn new(x: f32, y: f32, z: f32, u: f32, v: f32, color: Color, nx: f32, ny: f32, nz: f32) -> Vertex {
         Vertex {
             pos: [x, y, z],
             uv: [u, v],
@@ -87,6 +90,7 @@ impl Vertex {
                 (color.b * 255.) as u8,
                 (color.a * 255.) as u8,
             ],
+            normal: [nx, ny, nz],
         }
     }
 }
@@ -104,7 +108,7 @@ impl DrawCall {
     ) -> DrawCall {
         DrawCall {
             vertices: vec![
-                Vertex::new(0., 0., 0., 0., 0., Color::new(0.0, 0.0, 0.0, 0.0));
+                Vertex::new(0., 0., 0., 0., 0., Color::new(0.0, 0.0, 0.0, 0.0), 0., 0., 0.);
                 max_vertices
             ],
             indices: vec![0; max_indices],
@@ -1017,7 +1021,7 @@ impl QuadGl {
 
         for draw_call in &mut self.draw_calls {
             draw_call.vertices =
-                vec![Vertex::new(0., 0., 0., 0., 0., Color::new(0.0, 0.0, 0.0, 0.0)); max_vertices];
+                vec![Vertex::new(0., 0., 0., 0., 0., Color::new(0.0, 0.0, 0.0, 0.0), 0., 0., 0.); max_vertices];
             draw_call.indices = vec![0; max_indices];
         }
         for binding in &mut self.draw_calls_bindings {

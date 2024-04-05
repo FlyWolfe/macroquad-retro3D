@@ -10,6 +10,7 @@ pub struct Vertex {
     pub position: Vec3,
     pub uv: Vec2,
     pub color: Color,
+    pub normal: Vec3,
 }
 
 impl From<Vertex> for crate::quad_gl::VertexInterop {
@@ -18,6 +19,7 @@ impl From<Vertex> for crate::quad_gl::VertexInterop {
             vertex.position.into(),
             vertex.uv.into(),
             vertex.color.into(),
+            vertex.normal.into(),
         )
     }
 }
@@ -44,21 +46,25 @@ fn draw_quad(vertices: [(Vec3, Vec2, Color); 4]) {
             [vertices[0].0.x, vertices[0].0.y, vertices[0].0.z],
             [vertices[0].1.x, vertices[0].1.y],
             vertices[0].2.into(),
+            [0., 0., 0.],
         ),
         (
             [vertices[1].0.x, vertices[1].0.y, vertices[1].0.z],
             [vertices[1].1.x, vertices[1].1.y],
             vertices[1].2.into(),
+            [0., 0., 0.],
         ),
         (
             [vertices[2].0.x, vertices[2].0.y, vertices[2].0.z],
             [vertices[2].1.x, vertices[2].1.y],
             vertices[2].2.into(),
+            [0., 0., 0.],
         ),
         (
             [vertices[3].0.x, vertices[3].0.y, vertices[3].0.z],
             [vertices[3].1.x, vertices[3].1.y],
             vertices[3].2.into(),
+            [0., 0., 0.],
         ),
     ];
 
@@ -73,8 +79,8 @@ pub fn draw_line_3d(start: Vec3, end: Vec3, color: Color) {
     let indices = [0, 1];
 
     let line = [
-        ([start.x, start.y, start.z], uv, color),
-        ([end.x, end.y, end.z], uv, color),
+        ([start.x, start.y, start.z], uv, color, [0., 0., 0.]),
+        ([end.x, end.y, end.z], uv, color, [0., 0., 0.]),
     ];
     context.gl.texture(None);
     context.gl.draw_mode(DrawMode::Lines);
@@ -532,9 +538,9 @@ pub fn draw_sphere_ex(
 
             context.gl.geometry(
                 &[
-                    ((v1 * scale + center).into(), uv1, color),
-                    ((v2 * scale + center).into(), uv2, color),
-                    ((v3 * scale + center).into(), uv3, color),
+                    ((v1 * scale + center).into(), uv1, color, v1.into()),
+                    ((v2 * scale + center).into(), uv2, color, v2.into()),
+                    ((v3 * scale + center).into(), uv3, color, v3.into()),
                 ],
                 &[0, 1, 2],
             );
@@ -560,9 +566,9 @@ pub fn draw_sphere_ex(
 
             context.gl.geometry(
                 &[
-                    ((v1 * scale + center).into(), uv1, color),
-                    ((v2 * scale + center).into(), uv2, color),
-                    ((v3 * scale + center).into(), uv3, color),
+                    ((v1 * scale + center).into(), uv1, color, v1.into()),
+                    ((v2 * scale + center).into(), uv2, color, v2.into()),
+                    ((v3 * scale + center).into(), uv3, color, v3.into()),
                 ],
                 &[0, 1, 2],
             );

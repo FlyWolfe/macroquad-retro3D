@@ -10,9 +10,9 @@ pub fn draw_triangle(v1: Vec2, v2: Vec2, v3: Vec2, color: Color) {
     let context = get_context();
 
     let vertices = [
-        Vertex::new(v1.x, v1.y, 0., 0., 0., color),
-        Vertex::new(v2.x, v2.y, 0., 0., 0., color),
-        Vertex::new(v3.x, v3.y, 0., 0., 0., color),
+        Vertex::new(v1.x, v1.y, 0., 0., 0., color, 0., 0., 0.),
+        Vertex::new(v2.x, v2.y, 0., 0., 0., color, 0., 0., 0.),
+        Vertex::new(v3.x, v3.y, 0., 0., 0., color, 0., 0., 0.),
     ];
 
     let indices: [u16; 3] = [0, 1, 2];
@@ -36,10 +36,10 @@ pub fn draw_rectangle(x: f32, y: f32, w: f32, h: f32, color: Color) {
 
     #[rustfmt::skip]
     let vertices = [
-        Vertex::new(x    , y    , 0., 0.0, 0.0, color),
-        Vertex::new(x + w, y    , 0., 1.0, 0.0, color),
-        Vertex::new(x + w, y + h, 0., 1.0, 1.0, color),
-        Vertex::new(x    , y + h, 0., 0.0, 1.0, color),
+        Vertex::new(x    , y    , 0., 0.0, 0.0, color, 0., 0., 0.),
+        Vertex::new(x + w, y    , 0., 1.0, 0.0, color, 0., 0., 0.),
+        Vertex::new(x + w, y + h, 0., 1.0, 1.0, color, 0., 0., 0.),
+        Vertex::new(x    , y + h, 0., 0.0, 1.0, color, 0., 0., 0.),
     ];
     let indices: [u16; 6] = [0, 1, 2, 0, 2, 3];
 
@@ -56,15 +56,15 @@ pub fn draw_rectangle_lines(x: f32, y: f32, w: f32, h: f32, thickness: f32, colo
 
     #[rustfmt::skip]
     let vertices = [
-        Vertex::new(x    , y    , 0., 0.0, 1.0, color),
-        Vertex::new(x + w, y    , 0., 1.0, 0.0, color),
-        Vertex::new(x + w, y + h, 0., 1.0, 1.0, color),
-        Vertex::new(x    , y + h, 0., 0.0, 0.0, color),
+        Vertex::new(x    , y    , 0., 0.0, 1.0, color, 0., 0., 0.),
+        Vertex::new(x + w, y    , 0., 1.0, 0.0, color, 0., 0., 0.),
+        Vertex::new(x + w, y + h, 0., 1.0, 1.0, color, 0., 0., 0.),
+        Vertex::new(x    , y + h, 0., 0.0, 0.0, color, 0., 0., 0.),
         //inner rectangle
-        Vertex::new(x + t    , y + t    , 0., 0.0, 0.0, color),
-        Vertex::new(x + w - t, y + t    , 0., 0.0, 0.0, color),
-        Vertex::new(x + w - t, y + h - t, 0., 0.0, 0.0, color),
-        Vertex::new(x + t    , y + h - t, 0., 0.0, 0.0, color),
+        Vertex::new(x + t    , y + t    , 0., 0.0, 0.0, color, 0., 0., 0.),
+        Vertex::new(x + w - t, y + t    , 0., 0.0, 0.0, color, 0., 0., 0.),
+        Vertex::new(x + w - t, y + h - t, 0., 0.0, 0.0, color, 0., 0., 0.),
+        Vertex::new(x + t    , y + h - t, 0., 0.0, 0.0, color, 0., 0., 0.),
     ];
     let indices: [u16; 24] = [
         0, 1, 4, 1, 4, 5, 1, 5, 6, 1, 2, 6, 3, 7, 2, 2, 7, 6, 0, 4, 3, 3, 4, 7,
@@ -116,10 +116,10 @@ pub fn draw_rectangle_ex(x: f32, y: f32, w: f32, h: f32, params: DrawRectanglePa
 
     #[rustfmt::skip]
     let vertices = [
-        Vertex::new(v[0].x, v[0].y, v[0].z, 0.0, 0.0, params.color),
-        Vertex::new(v[1].x, v[1].y, v[1].z, 1.0, 0.0, params.color),
-        Vertex::new(v[2].x, v[2].y, v[2].z, 1.0, 1.0, params.color),
-        Vertex::new(v[3].x, v[3].y, v[3].z, 0.0, 1.0, params.color),
+        Vertex::new(v[0].x, v[0].y, v[0].z, 0.0, 0.0, params.color, 0., 0., 0.),
+        Vertex::new(v[1].x, v[1].y, v[1].z, 1.0, 0.0, params.color, 0., 0., 0.),
+        Vertex::new(v[2].x, v[2].y, v[2].z, 1.0, 1.0, params.color, 0., 0., 0.),
+        Vertex::new(v[3].x, v[3].y, v[3].z, 0.0, 1.0, params.color, 0., 0., 0.),
     ];
     let indices: [u16; 6] = [0, 1, 2, 0, 2, 3];
 
@@ -156,12 +156,12 @@ pub fn draw_poly(x: f32, y: f32, sides: u8, radius: f32, rotation: f32, color: C
     let mut indices = Vec::<u16>::with_capacity(sides as usize * 3);
 
     let rot = rotation.to_radians();
-    vertices.push(Vertex::new(x, y, 0., 0., 0., color));
+    vertices.push(Vertex::new(x, y, 0., 0., 0., color, 0., 0., 0.));
     for i in 0..=sides {
         let rx = (i as f32 / sides as f32 * std::f32::consts::PI * 2. + rot).cos();
         let ry = (i as f32 / sides as f32 * std::f32::consts::PI * 2. + rot).sin();
 
-        let vertex = Vertex::new(x + radius * rx, y + radius * ry, 0., rx, ry, color);
+        let vertex = Vertex::new(x + radius * rx, y + radius * ry, 0., rx, ry, color, 0., 0., 0.);
 
         vertices.push(vertex);
 
@@ -225,7 +225,7 @@ pub fn draw_ellipse(x: f32, y: f32, w: f32, h: f32, rotation: f32, color: Color)
     let rot = rotation.to_radians();
     let sr = rot.sin();
     let cr = rot.cos();
-    vertices.push(Vertex::new(x, y, 0., 0., 0., color));
+    vertices.push(Vertex::new(x, y, 0., 0., 0., color, 0., 0., 0.));
     for i in 0..=sides {
         let rx = (i as f32 / sides as f32 * std::f32::consts::PI * 2.).cos();
         let ry = (i as f32 / sides as f32 * std::f32::consts::PI * 2.).sin();
@@ -234,7 +234,7 @@ pub fn draw_ellipse(x: f32, y: f32, w: f32, h: f32, rotation: f32, color: Color)
         let py = h * ry;
         let rotated_x = px * cr - py * sr;
         let rotated_y = py * cr + px * sr;
-        let vertex = Vertex::new(x + rotated_x, y + rotated_y, 0., rx, ry, color);
+        let vertex = Vertex::new(x + rotated_x, y + rotated_y, 0., rx, ry, color, 0., 0., 0.);
 
         vertices.push(vertex);
 
@@ -309,10 +309,10 @@ pub fn draw_line(x1: f32, y1: f32, x2: f32, y2: f32, thickness: f32, color: Colo
     context.gl.draw_mode(DrawMode::Triangles);
     context.gl.geometry(
         &[
-            Vertex::new(x1 + tx, y1 + ty, 0., 0., 0., color),
-            Vertex::new(x1 - tx, y1 - ty, 0., 0., 0., color),
-            Vertex::new(x2 + tx, y2 + ty, 0., 0., 0., color),
-            Vertex::new(x2 - tx, y2 - ty, 0., 0., 0., color),
+            Vertex::new(x1 + tx, y1 + ty, 0., 0., 0., color, 0., 0., 0.),
+            Vertex::new(x1 - tx, y1 - ty, 0., 0., 0., color, 0., 0., 0.),
+            Vertex::new(x2 + tx, y2 + ty, 0., 0., 0., color, 0., 0., 0.),
+            Vertex::new(x2 - tx, y2 - ty, 0., 0., 0., color, 0., 0., 0.),
         ],
         &[0, 1, 2, 2, 1, 3],
     );

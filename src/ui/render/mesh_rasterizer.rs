@@ -16,9 +16,10 @@ pub struct Vertex {
     pub pos: [f32; 3],
     pub uv: [f32; 2],
     pub color: [f32; 4],
+    pub normal: [f32; 3],
 }
 
-pub type VertexInterop = ([f32; 3], [f32; 2], [f32; 4]);
+pub type VertexInterop = ([f32; 3], [f32; 2], [f32; 4], [f32; 3]);
 
 impl From<Vertex> for VertexInterop {
     fn from(value: Vertex) -> Self {
@@ -26,6 +27,7 @@ impl From<Vertex> for VertexInterop {
             [value.pos[0], value.pos[1], value.pos[2]],
             [value.uv[0], value.uv[1]],
             value.color,
+            [value.normal[0], value.normal[1], value.normal[2]],
         )
     }
 }
@@ -36,6 +38,7 @@ impl Vertex {
             pos: [x, y, 0.],
             uv: [u, v],
             color: [color.r, color.g, color.b, color.a],
+            normal: [0., 0., 0.],
         }
     }
 }

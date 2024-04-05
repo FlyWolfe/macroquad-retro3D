@@ -429,10 +429,10 @@ pub fn draw_texture_ex(
     ];
     #[rustfmt::skip]
     let vertices = [
-        Vertex::new(p[0].x, p[0].y, 0.,  sx      /width,  sy      /height, color),
-        Vertex::new(p[1].x, p[1].y, 0., (sx + sw)/width,  sy      /height, color),
-        Vertex::new(p[2].x, p[2].y, 0., (sx + sw)/width, (sy + sh)/height, color),
-        Vertex::new(p[3].x, p[3].y, 0.,  sx      /width, (sy + sh)/height, color),
+        Vertex::new(p[0].x, p[0].y, 0.,  sx      /width,  sy      /height, color, 0., 0., 0.),
+        Vertex::new(p[1].x, p[1].y, 0., (sx + sw)/width,  sy      /height, color, 0., 0., 0.),
+        Vertex::new(p[2].x, p[2].y, 0., (sx + sw)/width, (sy + sh)/height, color, 0., 0., 0.),
+        Vertex::new(p[3].x, p[3].y, 0.,  sx      /width, (sy + sh)/height, color, 0., 0., 0.),
     ];
     let indices: [u16; 6] = [0, 1, 2, 0, 2, 3];
 
