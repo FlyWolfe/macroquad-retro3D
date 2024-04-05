@@ -526,6 +526,7 @@ impl PipelinesStorage {
                 VertexAttribute::new("position", VertexFormat::Float3),
                 VertexAttribute::new("texcoord", VertexFormat::Float2),
                 VertexAttribute::new("color0", VertexFormat::Byte4),
+                VertexAttribute::new("normal", VertexFormat::Float3),
             ],
             shader,
             params,
